@@ -1,58 +1,58 @@
 <?php
 function mm_smtp($to, $subject, $message)
 {
-  $curl = curl_init();
+    $curl = curl_init();
 
-  curl_setopt_array($curl, array(
-    CURLOPT_URL => 'https://smtp1.mailmantra.com/api/mail/v1',
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_ENCODING => '',
-    CURLOPT_MAXREDIRS => 20,
-    CURLOPT_TIMEOUT => 0,
-    CURLOPT_FOLLOWLOCATION => true,
-    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-    CURLOPT_CUSTOMREQUEST => 'POST',
-    CURLOPT_POSTFIELDS => array(
-      'api_key' => MM_MAIL_AUTH_KEY,
-      'to' => $to,
-      'subject' => $subject,
-      'message' => $message,
-    ),
-  ));
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => 'https://smtp1.mailmantra.com/api/mail/v1',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 20,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => array(
+            'api_key' => MM_MAIL_AUTH_KEY,
+            'to' => $to,
+            'subject' => $subject,
+            'message' => $message,
+        ),
+    ));
 
-  $response = curl_exec($curl);
+    $response = curl_exec($curl);
 
-  curl_close($curl);
-  return $response;
+    curl_close($curl);
+    return $response;
 }
 
 function mm_smtp_balance()
 {
-  $curl = curl_init();
+    $curl = curl_init();
 
-  curl_setopt_array($curl, array(
-    CURLOPT_URL => 'https://smtp1.mailmantra.com/api/balance/v1',
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_ENCODING => '',
-    CURLOPT_MAXREDIRS => 20,
-    CURLOPT_TIMEOUT => 0,
-    CURLOPT_FOLLOWLOCATION => true,
-    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-    CURLOPT_CUSTOMREQUEST => 'POST',
-    CURLOPT_POSTFIELDS => array(
-      'api_key' => MM_MAIL_AUTH_KEY,
-    ),
-  ));
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => 'https://smtp1.mailmantra.com/api/balance/v1',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 20,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => array(
+            'api_key' => MM_MAIL_AUTH_KEY,
+        ),
+    ));
 
-  $response = curl_exec($curl);
+    $response = curl_exec($curl);
 
-  curl_close($curl);
-  return json_decode($response, true);
+    curl_close($curl);
+    return json_decode($response, true);
 }
 
 function get_joining_mail_body_BLOCK($data)
 {
-  return '<!doctype html>
+    return '<!doctype html>
             <html>
               <head>
                 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -475,7 +475,7 @@ function get_joining_mail_body_BLOCK($data)
 
 function get_joining_mail_body($data)
 {
-  return '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    return '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
             <html xmlns="http://www.w3.org/1999/xhtml">
             <head>
                 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -501,7 +501,7 @@ function get_joining_mail_body($data)
 
 function get_topup_mail_body($data)
 {
-  return '<!doctype html>
+    return '<!doctype html>
             <html>
               <head>
                 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -920,4 +920,87 @@ function get_topup_mail_body($data)
                 </table>
               </body>
             </html>';
+}
+
+
+function getWelcomeEmailHtml($arr)
+{
+    $name = htmlspecialchars($arr['name']) ?? '';
+    $accountId = $arr['accountId'] ?? '';
+    $password = $arr['password'] ?? '';
+    $referralLink = $arr['referralLink'] ?? (PROJECT_URL . "emp-login/member/referral-join?ref=" . encrypt($accountId));
+    $loginLink = $arr['loginLink'] ?? PROJECT_URL . "emp-login/member/";
+
+    $html = '
+    <html>
+    <head>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                color: #333333;
+                line-height: 1.6;
+            }
+            .container {
+                max-width: 600px;
+                margin: auto;
+                padding: 20px;
+                border: 1px solid #dddddd;
+                border-radius: 8px;
+                background-color: #f9f9f9;
+            }
+            .footer {
+                margin-top: 30px;
+                font-size: 12px;
+                color: #777777;
+            }
+            a {
+                color: #1a73e8;
+                text-decoration: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <p>Dear <strong>' . htmlspecialchars($name) . '</strong>,</p>
+            
+            <p>Welcome to <strong>Empower TradeFX</strong>.</p>
+
+            <p>We are delighted to have you among us. On behalf of all the members and the management, we would like to extend our warmest welcome and good wishes!</p>
+
+            <p>We believe that what a strong group of people can accomplish together is much larger, far greater, and will exceed what an individual can achieve alone.</p>
+
+            <p>You can login to your account and manage your account accordingly.</p>
+
+            <p><strong>Login details are as follows:</strong></p>
+            <ul>
+                <li><strong>Account ID:</strong> ' . htmlspecialchars($accountId) . '</li>
+                <li><strong>Login Password:</strong> ' . htmlspecialchars($password) . '</li>
+                <li><strong>Your Referral Link:</strong> <a href="' . htmlspecialchars($referralLink) . '">' . htmlspecialchars($referralLink) . '</a></li>
+                <li><strong>Login Link:</strong> <a href="' . htmlspecialchars($loginLink) . '">' . htmlspecialchars($loginLink) . '</a></li>
+            </ul>
+
+            <p>Please write down your Account ID and password in a safe place and do not share it with anyone.</p>
+
+            <p>Once again, congratulations! We wish you a very bright and successful future with <strong>EMPOWER TRADEFX</strong>.</p>
+
+            <p>For any type of help and support, contact us at <a href="mailto:info@empoweraitradefx.com">info@empoweraitradefx.com</a></p>
+
+            <p><strong>Please follow our official channel to get all updates:</strong></p>
+            <ul>
+                <li>WhatsApp: <a href="https://whatsapp.com/channel/0029VbBD32JGk1FzkkT9K73c">https://whatsapp.com/channel/0029VbBD32JGk1FzkkT9K73c</a></li>
+                <li>Telegram: <a href="https://t.me/empowertradefxofficial">https://t.me/empowertradefxofficial</a></li>
+            </ul>
+
+            <p>Best regards,<br>
+            <strong>EMPOWER TRADEFX Marketing Team</strong><br>
+            <a href="https://www.empoweraitradefx.com">www.empoweraitradefx.com</a></p>
+
+            <div class="footer">
+                <p>This is an automated message. Please do not reply to this email.</p>
+            </div>
+        </div>
+    </body>
+    </html>';
+
+    return $html;
 }

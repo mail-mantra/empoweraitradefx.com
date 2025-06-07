@@ -11,29 +11,31 @@ $ip = get_ip();
 $session_id = session_id();
 
 
-if (!isset($_SERVER['HTTP_REFERER'])) {
+if(!isset($_SERVER['HTTP_REFERER'])) {
     $systemDenied = true;
     include('include/forced-logout.php');
 }
 @$back = $_SERVER['HTTP_REFERER'];
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['submit'] == 'Submit') {
+if($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['submit'] == 'Submit') {
 
     $con = $db->connect();
-    foreach ($_POST as $key => $value) {
+    foreach($_POST as $key => $value) {
         $data[$key] = prevent_injection($con, $value);
     }
     $db->dbDisconnet($con);
 
 
-    if ($data['intro'] == '' || $data['name'] == '' /*|| $data['pan_no'] == ''*/ || $data['email'] == '' || $data['mobile'] == '') {
+    if($data['intro'] == '' || $data['name'] == '' /*|| $data['pan_no'] == ''*/ || $data['email'] == '' || $data['mobile'] == '') {
         $_SESSION['e'] = "Please enter the mandatory fields";
-    } else if (!is_numeric($data['mobile']) || strlen($data['mobile']) < 10 || strlen($data['mobile']) > 10) {
+    }
+    else if(!is_numeric($data['mobile']) || strlen($data['mobile']) < 10 || strlen($data['mobile']) > 10) {
         $_SESSION['e'] = "Please enter a valid mobile no.";
-    } else {
+    }
+    else {
 
         // validate email
-        if ($data['email'] != $_SESSION['joining_email'] || $data['user_otp'] != $_SESSION['joining_otp']) {
+        if($data['email'] != $_SESSION['joining_email'] || $data['user_otp'] != $_SESSION['joining_otp']) {
             $_SESSION['e'] = "Invalid OTP or Email.";
             header("Location: $back");
             die;
@@ -94,11 +96,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['submit'] == 'Submit') {
         $db->dbDisconnet($con);
 
 
-        if ($data['intro'] == 'ADMIN' || $data['intro'] == 'admin') {
+        if($data['intro'] == 'ADMIN' || $data['intro'] == 'admin') {
             $intro_level = 1;
             $intro_id = 0;
             $valid_intro = 1;
-        } else {
+        }
+        else {
             $con = $db->connect();
             $function_member = member_code($con, $data['intro']);
             $db->dbDisconnet($con);
@@ -108,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['submit'] == 'Submit') {
             $valid_intro = $function_member['valid_member'];
         }
 
-        if ($valid_intro == 0) {
+        if($valid_intro == 0) {
             $_SESSION['e'] = "Invalid Introducer.";
             header("Location: $back");
             die;
@@ -125,7 +128,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['submit'] == 'Submit') {
         $con = $db->connect();
         $sql21 = mysqli_query($con, "select * from member where mem_code='" . $mem_code . "'");
         $db->dbDisconnet($con);
-        if (mysqli_num_rows($sql21) == 1) {
+        if(mysqli_num_rows($sql21) == 1) {
             $_SESSION['e'] = $mem_code . " already exists. Try with another ID";
             header("Location: $back");
             die;
@@ -146,9 +149,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['submit'] == 'Submit') {
         $r1 = mysqli_fetch_assoc($q1);
         $n = $r1['return_id'];
 
-        if ($n >= 1) {
-            /*$mobile = $data['mobile'];
+        if($n >= 1) {
             $mem_name = $data['name'];
+            /*$mobile = $data['mobile'];
 
             $msg = "Dear $mem_name Your Login ID is $mem_code and password is $password. Visit " . PROJECT_URL . " -ECOSOL";
             $con = $db->connect();
@@ -156,6 +159,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['submit'] == 'Submit') {
             $db->dbDisconnet($con);*/
 
             /* mail*/
+            /*
             $message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
                         <html xmlns="http://www.w3.org/1999/xhtml">
                         <head>
@@ -178,7 +182,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['submit'] == 'Submit') {
                         </div>
                         </body>
                         </html>';
+            */
 
+            $arr_email = [
+                'name' => $mem_name,
+                'accountId' => $mem_code,
+                'password' => $password,
+            ];
+
+            $message = getWelcomeEmailHtml($arr_email);
             $mail_to = $data['email'];
             $mail_subject = "Welcome To " . PROJECT_NAME;
             $mail_message = $message;
@@ -186,14 +198,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['submit'] == 'Submit') {
             /* mail*/
 
             $_SESSION['s'] = "Joining Successful. Your Login ID is <strong>$mem_code</strong> and password is <strong>$password</strong>";
-        } else {
+        }
+        else {
             $_SESSION['e'] = "Temporary Error...!";
         }
     }
 
     header("Location: $back");
     die;
-} else {
+}
+else {
     $systemDenied = true;
     include('include/forced-logout.php');
 }

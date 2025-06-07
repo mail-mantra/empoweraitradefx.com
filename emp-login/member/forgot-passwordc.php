@@ -10,33 +10,33 @@ $db = new Database();
 $now = now();
 $back = $_SERVER['HTTP_REFERER'];
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['un'])) {
-  // extract($_POST);
-  $con = $db->connect();
-  foreach ($_POST as $key => $value) {
-    $data[$key] = prevent_injection($con, $value);
-  }
-  $db->dbDisconnet($con);
+if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['un'])) {
+    // extract($_POST);
+    $con = $db->connect();
+    foreach($_POST as $key => $value) {
+        $data[$key] = prevent_injection($con, $value);
+    }
+    $db->dbDisconnet($con);
 
 
-  $username = trim($data['un']);
+    $username = trim($data['un']);
 
-  $sql1 = "SELECT a.mobile, a.email, a.name, a.mem_code, b.username, b.password FROM member a, member_login b where a.member_id=b.member_id and b.username='" . $username . "' ";
-  $conn1 = $db->connect();
-  $res1 = $conn1->query($sql1);
-  $conn1->close();
+    $sql1 = "SELECT a.mobile, a.email, a.name, a.mem_code, b.username, b.password FROM member a, member_login b where a.member_id=b.member_id and b.username='" . $username . "' ";
+    $conn1 = $db->connect();
+    $res1 = $conn1->query($sql1);
+    $conn1->close();
 
-  if ($res1->num_rows) {
-    $arr1 = $res1->fetch_assoc();
-    $username = $arr1['username'];
-    $mem_code = $arr1['mem_code'];
-    $name = $arr1['name'];
-    $mobile = $arr1['mobile'];
-    $email = $arr1['email'];
-    $password = $arr1['password'];
+    if($res1->num_rows) {
+        $arr1 = $res1->fetch_assoc();
+        $username = $arr1['username'];
+        $mem_code = $arr1['mem_code'];
+        $name = $arr1['name'];
+        $mobile = $arr1['mobile'];
+        $email = $arr1['email'];
+        $password = $arr1['password'];
 
-    /* mail*/
-    $message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+        /* mail*/
+        $message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
                     <html xmlns="http://www.w3.org/1999/xhtml">
                     <head>
                         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -59,31 +59,34 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['un'])) {
                     </body>
                     </html>';
 
-    $mail_to = $email;
-    $mail_subject = "Password recovery from " . PROJECT_NAME;
-    $mail_message = $message;
-    mm_smtp($mail_to, $mail_subject, $mail_message);
-    /* mail*/
+        $mail_to = $email;
+        $mail_subject = "Password recovery from " . PROJECT_NAME;
+        $mail_message = $message;
+        mm_smtp($mail_to, $mail_subject, $mail_message);
+        /* mail*/
 
-    /*$sms_message = "Dear " . $name . ", your Password is: " . $password . ".Thank You.\nTeam " . PROJECT_URL . " -ECOSOL";
-    $con = $db->connect();
-    $sms_result = sms_mm($con, '', '', $mobile, $sms_message, '', '1207162918337920965');
-    $db->dbDisconnet($con);*/
+        /*$sms_message = "Dear " . $name . ", your Password is: " . $password . ".Thank You.\nTeam " . PROJECT_URL . " -ECOSOL";
+        $con = $db->connect();
+        $sms_result = sms_mm($con, '', '', $mobile, $sms_message, '', '1207162918337920965');
+        $db->dbDisconnet($con);*/
 
-    if ($sms_result) {
-      $_SESSION['s'] = "Password Sent to your registered Email ID.";
-      header("Location:index.php");
-      die;
-    } else {
-      $_SESSION['e'] = 'Temporary Problem, Try again';
+        // if($sms_result) {
+            $_SESSION['s'] = "Password Sent to your registered Email ID.";
+            header("Location:index.php");
+            die;
+//        }
+//        else {
+//            $_SESSION['e'] = 'Temporary Problem, Try again';
+//        }
     }
-  } else {
-    $_SESSION['e'] = 'Invalid Userid or Mobile Number';
-  }
+    else {
+        $_SESSION['e'] = 'Invalid Userid or Mobile Number';
+    }
 
 
-  header("Location:" . $back);
-  die;
-} else {
-  header("Location:./");
+    header("Location:" . $back);
+    die;
+}
+else {
+    header("Location:./");
 }

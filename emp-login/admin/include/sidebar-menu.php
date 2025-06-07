@@ -40,10 +40,17 @@
                             <div class="mm-sidebar-submenu">
                                 <ul>
                                     <li><a href="dashboard">Dashboard</a></li>
-                                    <li><a href="news">News Board</a></li>
-                                    <li><a href="add-popup">Popup</a></li>
                                     <!--<li><a href="setting">Settings</a></li>
                                     <li><a href="bank-settings">Bank Update</a></li>-->
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="mm-sidebar-dropdown">
+                            <a href="#"><i class="fa fa-upload"></i><span>Upload</span></a>
+                            <div class="mm-sidebar-submenu">
+                                <ul>
+                                    <li><a href="news">News Board</a></li>
+                                    <li><a href="add-popup">Popup</a></li>
                                 </ul>
                             </div>
                         </li>

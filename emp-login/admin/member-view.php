@@ -237,7 +237,7 @@ $downline = '';
                         $search_with_date_range = "";
                     }
 
-                    $query = "select m1.*, m2.*, m3.state, m3.city, m3.pin, m3.pan_no from member m1 
+                    $query = "select m1.*, m2.*, m3.state, m3.city, m3.pin, m3.pan_no, TOTAL_SELF_TOPUP(m1.member_id) AS total_topup_amount from member m1 
                     inner join member_login m2 on m1.member_id=m2.member_id
     				inner join member_details m3 on m1.member_id=m3.member_id where 1 " . $query_search_by . $search_with_date_range . $sql_mobile . $sql_pan;
 
@@ -310,7 +310,7 @@ $downline = '';
                                                     <?php
                                                     if ($is_active >= 1) {
                                                         echo "<span class='badge badge-success'>Active</span><br>";
-                                                        //echo "<span class='badge badge-warning'>" . CURRENCY_ICON . $total_topup_amount . "</span><br>";
+                                                        echo "<span class='badge badge-warning'>" . CURRENCY_ICON . $r1['total_topup_amount'] . "</span><br>";
                                                         echo dmy($active_date);
                                                     } else {
                                                         echo "<span class='badge badge-danger'>Inactive</span>";

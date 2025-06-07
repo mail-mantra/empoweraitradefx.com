@@ -2,6 +2,7 @@
 include('include/privilege.php');
 include('../class/DbClass.php');
 include('../lib/my_function.php');
+include('../lib/smtp_function.php');
 $db = new Database();
 
 $now = now();
@@ -63,6 +64,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['submit'] == 'Submit') {
         else {
 
             $member_id = $md['member_id'];
+            $mem_code = $md['mem_code'];
 
             $con = $db->connect();
             $wallet_balance = get_wallet_balance_of_member($con, $user_id, 'myfund_wallet_balance');
@@ -84,6 +86,19 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['submit'] == 'Submit') {
                 $n = $r1['return_id'];
 
                 if($n == 1) {
+                    // --------------- Start : email ------------------
+
+                    $arr4email = [
+                        'name' => $md['name'],
+                        'amount' => $_amount,
+                    ];
+                    $mail_to = $md['email'];
+                    $mail_subject = "Community Trade Investment Confirmation";
+                    $mail_message = getInvestmentEmailHtml($arr4email);
+                    mm_smtp($mail_to, $mail_subject, $mail_message);
+                    // --------------- End : email ------------------
+
+
                     $_SESSION['s'] = "Investment successfull.";
                 }
                 else {

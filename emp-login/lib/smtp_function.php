@@ -1004,3 +1004,70 @@ function getWelcomeEmailHtml($arr)
 
     return $html;
 }
+
+
+function getInvestmentEmailHtml($arr)
+{
+    $name = htmlspecialchars($arr['name']) ?? '';
+    $amount = $arr['amount'] ?? '';
+    $investment_type = $arr['investment_type'] ?? 'Community Trade Investment';
+
+    $html = '
+    <html>
+    <head>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                color: #333333;
+                background-color: #f4f4f4;
+                padding: 20px;
+            }
+            .email-container {
+                max-width: 600px;
+                margin: auto;
+                background: #ffffff;
+                padding: 30px;
+                border-radius: 8px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            }
+            h2 {
+                color: #1a73e8;
+            }
+            .footer {
+                font-size: 12px;
+                color: #888888;
+                margin-top: 30px;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="email-container">
+            <h2>'.$investment_type.' Confirmation</h2>
+            
+            <p>Dear <strong>' . $name . '</strong>,</p>
+
+            <p>Thank you for participating in our <strong>'.$investment_type.'</strong> program.</p>
+
+            <p>We have successfully received your investment of <strong>$' . number_format($amount) . '</strong>.</p>
+
+            <p>Your contribution helps us grow a stronger trading network and bring shared benefits to all members.</p>
+
+            <p>You can monitor your investment status anytime by logging into your account.</p>
+
+            <p>If you have any questions or need assistance, feel free to reach out to our support team at <a href="mailto:info@empoweraitradefx.com">info@empoweraitradefx.com</a>.</p>
+
+            <p>Thank you for your trust and support!</p>
+
+            <p>Best regards,<br>
+            <strong>Empower TradeFX Team</strong></p>
+
+            <div class="footer">
+                &copy; ' . date("Y") . ' Empower TradeFX. All rights reserved.
+            </div>
+        </div>
+    </body>
+    </html>';
+
+    return $html;
+}

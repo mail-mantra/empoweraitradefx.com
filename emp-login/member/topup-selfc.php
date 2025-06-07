@@ -2,6 +2,7 @@
 include('include/privilege.php');
 include('../class/DbClass.php');
 include('../lib/my_function.php');
+include('../lib/smtp_function.php');
 $db = new Database();
 
 $now = now();
@@ -17,7 +18,6 @@ if(!isset($_SERVER['HTTP_REFERER'])) {
 
 if($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['submit'] == 'Submit') {
 
-    extract($_POST);
     //print_r($_POST); die;
 
     $con = $db->connect();
@@ -65,6 +65,21 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['submit'] == 'Submit') {
             $n = $r1['return_id'];
 
             if($n == 1) {
+                // --------------- Start : email ------------------
+                $con = $db->connect();
+                $md = member_code($con, $user_code);
+                $db->dbDisconnet($con);
+
+                $arr4email = [
+                    'name' => $md['name'],
+                    'amount' => $_amount,
+                ];
+                $mail_to = $md['email'];
+                $mail_subject = "Community Trade Investment Confirmation";
+                $mail_message = getInvestmentEmailHtml($arr4email);
+                mm_smtp($mail_to, $mail_subject, $mail_message);
+                // --------------- End : email ------------------
+
                 $_SESSION['s'] = $_amount . " investment successfull.";
             }
             else {

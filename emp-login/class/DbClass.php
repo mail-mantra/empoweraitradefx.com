@@ -1,29 +1,34 @@
 <?php
+
 class Database
 {
-	private $db_host = "localhost";
-	private $db_user = 'empoweraitradefx_user';
-	private $db_pass = "^aDEW)XGVtZk";
-	private $db_name = "empoweraitradefx_db";
+    private $db_host = "localhost";
+    private $db_user = 'empoweraitradefx_user';
+    private $db_pass = "^aDEW)XGVtZk";
+    private $db_name = "empoweraitradefx_db";
 
 
-	private $con = '';
+    private $con = '';
 
-	public function connect()
-	{
-		$con = mysqli_connect($this->db_host, $this->db_user, $this->db_pass, $this->db_name);
-		if (mysqli_connect_errno()) {
-			echo "Failed to connect to MySQL: " . mysqli_connect_error();
-			die;
-		} else {
-			return $con;
-		}
-	}
+    public function connect()
+    {
+        $con = mysqli_connect($this->db_host, $this->db_user, $this->db_pass, $this->db_name);
+        if(mysqli_connect_errno()) {
+            echo "Failed to connect to MySQL: " . mysqli_connect_error();
+            die;
+        }
+        else {
+            $con->set_charset('utf8mb4');
+            $con->query("SET @@session.time_zone = '+05:30'");
+            $con->query("SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));");
+            return $con;
+        }
+    }
 
-	function dbDisconnet($con)
-	{
-		mysqli_close($con);
-	}
+    function dbDisconnet($con)
+    {
+        mysqli_close($con);
+    }
 }
 
 define('PROJECT_NAME', 'Empower TradeFX');
@@ -34,7 +39,7 @@ define('PREFIX_MEMBER_CODE', 'ETF');
 define('CURRENCY_NAME', 'USDT ');
 define('CURRENCY_ICON', '<i class="fa fa-usd"></i> ');
 
-define('WRITABLE_PATH',	dirname(__DIR__) . "/web-assets/images"); // images/screenshots
+define('WRITABLE_PATH', dirname(__DIR__) . "/web-assets/images"); // images/screenshots
 define('WRITABLE_URL', "https://empoweraitradefx.com/emp-login/web-assets/images/"); // images/screenshots/
 
 ini_set('memory_limit', '512M');

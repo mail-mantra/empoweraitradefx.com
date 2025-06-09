@@ -948,6 +948,13 @@ function getWelcomeEmailHtml($arr)
                 border-radius: 8px;
                 background-color: #f9f9f9;
             }
+             .header {
+                text-align: center;
+                margin-bottom: 20px;
+            }
+            .header img {
+                max-width: 200px;
+            }
             .footer {
                 margin-top: 30px;
                 font-size: 12px;
@@ -961,6 +968,10 @@ function getWelcomeEmailHtml($arr)
     </head>
     <body>
         <div class="container">
+            <div class="header">
+                <img src="https://empoweraitradefx.com/emp-login/web-assets/images/logo.png" alt="Empower TradeFX Logo">
+            </div>
+            
             <p>Dear <strong>' . htmlspecialchars($name) . '</strong>,</p>
             
             <p>Welcome to <strong>Empower TradeFX</strong>.</p>
@@ -992,7 +1003,7 @@ function getWelcomeEmailHtml($arr)
             </ul>
 
             <p>Best regards,<br>
-            <strong>EMPOWER TRADEFX Marketing Team</strong><br>
+            <strong>EMPOWER TRADEFX<br/>Marketing Team</strong><br>
             <a href="https://www.empoweraitradefx.com">www.empoweraitradefx.com</a></p>
 
             <div class="footer">

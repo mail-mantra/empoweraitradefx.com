@@ -1,5 +1,5 @@
 <div class="c-logo d-none d-md-block">
-    <a href="dashboard"><img src="<?php echo PROJECT_LOGO ?>" class="img-fluid" style="max-width:200px" /></a>
+    <a href="dashboard"><img src="<?php echo PROJECT_LOGO ?>" class="img-fluid" style="max-width:200px"/></a>
 </div>
 <div class="mm-theme scrollable">
     <!--start-mm-sidebar-wrapper-->
@@ -31,12 +31,13 @@
             <!--start-mm-sidebar-menu-->
             <div class="mm-sidebar-menu">
                 <?php
-                if ($_SESSION['user_data']['user_type'] === 'admin') {
-                ?>
+                if($_SESSION['user_data']['user_type'] === 'admin') {
+                    ?>
                     <ul>
                         <li class="mm-header-menu"><span>General</span></li>
                         <li class="mm-sidebar-dropdown">
-                            <a href="#"><i class="fa fa-home"></i><span>Dashboard</span><span class="badge badge-pill badge-warning">New</span></a>
+                            <a href="#"><i class="fa fa-home"></i><span>Dashboard</span><span
+                                        class="badge badge-pill badge-warning">New</span></a>
                             <div class="mm-sidebar-submenu">
                                 <ul>
                                     <li><a href="dashboard">Dashboard</a></li>
@@ -51,6 +52,8 @@
                                 <ul>
                                     <li><a href="news">News Board</a></li>
                                     <li><a href="add-popup">Popup</a></li>
+                                    <li><a href="banner-add.php">Banner</a></li>
+                                    <li><a href="announcement.php">Announcement</a></li>
                                 </ul>
                             </div>
                         </li>
@@ -149,7 +152,8 @@
                                     <li><a href="report-force-credit-debit-working-wallet">View Working Wallet Cr/Dr</a>
 
                                     <li><a href="force-credit-debit-roi-wallet">Working Trading Profit Cr/Dr</a></li>
-                                    <li><a href="report-force-credit-debit-roi-wallet">View Trading Profit Wallet Cr/Dr</a>
+                                    <li><a href="report-force-credit-debit-roi-wallet">View Trading Profit Wallet
+                                            Cr/Dr</a>
                                     </li>
                                 </ul>
                             </div>
@@ -179,7 +183,8 @@
                             </div>
                         </li>
 
-                        <li><a href="topup-live-downline"><i class="fa fa-database"></i><span>Live Trade Invest for ID</span></a></li>
+                        <li><a href="topup-live-downline"><i
+                                        class="fa fa-database"></i><span>Live Trade Invest for ID</span></a></li>
 
                         <li class="mm-sidebar-dropdown">
                             <a href="#"><i class="fa fa-ban"></i><span>Pay Income</span></a>
@@ -228,6 +233,7 @@
                                 </ul>
                             </div>
                         </li>
+                        <li><a href="topup"><i class="fa fa-dropbox"></i><span>Topup</span></a></li>
 
                         <!--<li class="mm-sidebar-dropdown">
                             <a href="#"><i class="fa fa-file-text-o"></i><span>Refund Entry</span></a>
@@ -273,7 +279,6 @@
                         
                         <li><a href="view-voucher"><i class="fa fa-database"></i><span>View Voucher</span></a></li>
 
-                        <li><a href="topup"><i class="fa fa-dropbox"></i><span>Investment</span></a></li>
 
                         
                         <li class="mm-sidebar-dropdown">
@@ -298,12 +303,15 @@
                         </li>-->
 
                         <li class="mm-header-menu"><span>Report</span></li>
-                        <li><a href="topup-report"><i class="fa fa-database"></i><span>Community Trade List</span></a></li>
+                        <li><a href="topup-report"><i class="fa fa-database"></i><span>Community Trade List</span></a>
+                        </li>
 
-                        <li><a href="topup-live-report"><i class="fa fa-database"></i><span>Live Trade List</span></a></li>
+                        <li><a href="topup-live-report"><i class="fa fa-database"></i><span>Live Trade List</span></a>
+                        </li>
 
                         <!-- <li><a href="view-fund-request"><i class="fa fa-database"></i><span>View Balance Request</span></a></li> -->
-                        <li><a href="bep20-deposit-report"><i class="fa fa-database"></i><span>Bep20 Deposit Report</span></a></li>
+                        <li><a href="bep20-deposit-report"><i
+                                        class="fa fa-database"></i><span>Bep20 Deposit Report</span></a></li>
                         <!--<li><a href="view-live-account-request"><i class="fa fa-database"></i><span>Live Account Request</span></a></li>
                         <li><a href="view-copy-trade-request"><i class="fa fa-database"></i><span>Copy Trade Request</span></a></li>
                         
@@ -316,23 +324,29 @@
                         <li><a href="payment-report"><i class="fa fa-database"></i><span>Payment Report</span></a></li>-->
 
                     </ul>
-                <?php
-                } else if ($_SESSION['user_data']['user_type'] === 'sub_admin') {
-                ?>
+                    <?php
+                }
+                else if($_SESSION['user_data']['user_type'] === 'sub_admin') {
+                    ?>
                     <ul>
                         <li class="mm-header-menu"><span>General</span></li>
                         <li class="mm-sidebar-dropdown">
-                            <a href="#"><i class="fa fa-home"></i><span>Dashboard</span><span class="badge badge-pill badge-warning">New</span></a>
+                            <a href="#"><i class="fa fa-home"></i><span>Dashboard</span><span
+                                        class="badge badge-pill badge-warning">New</span></a>
                             <div class="mm-sidebar-submenu">
                                 <ul>
-                                    <?php if (in_array("dashboard", $accessible_pages)) { ?><li><a href="dashboard">Dashboard</a></li><?php } ?>
-                                    <?php if (in_array("news", $accessible_pages)) { ?><li><a href="news">News Board</a></li><?php } ?>
-                                    <?php if (in_array("add-popup", $accessible_pages)) { ?><li><a href="add-popup">Popup</a></li><?php } ?>
+                                    <?php if(in_array("dashboard", $accessible_pages)) { ?>
+                                        <li><a href="dashboard">Dashboard</a></li><?php } ?>
+                                    <?php if(in_array("news", $accessible_pages)) { ?>
+                                        <li><a href="news">News Board</a></li><?php } ?>
+                                    <?php if(in_array("add-popup", $accessible_pages)) { ?>
+                                        <li><a href="add-popup">Popup</a></li><?php } ?>
                                 </ul>
                             </div>
                         </li>
 
-                        <?php if (in_array("signal", $accessible_pages)) { ?><li><a href="signal"><i class="fa fa-line-chart"></i><span>Signal</span></a></li><?php } ?>
+                        <?php if(in_array("signal", $accessible_pages)) { ?>
+                            <li><a href="signal"><i class="fa fa-line-chart"></i><span>Signal</span></a></li><?php } ?>
 
                         <?php
                         $menus = [
@@ -354,13 +368,13 @@
                             "Report" => ["topup-report", "topup-signal-report", "view-fund-request", "view-live-account-request"]
                         ];
 
-                        foreach ($menus as $title => $menu) {
-                            if (sizeof(array_intersect($menu, $accessible_pages))) {
+                        foreach($menus as $title => $menu) {
+                            if(sizeof(array_intersect($menu, $accessible_pages))) {
                                 echo "<li class='mm-sidebar-dropdown'>";
                                 echo "<a href='#'><i class='fa fa-folder'></i><span>$title</span></a>";
                                 echo "<div class='mm-sidebar-submenu'><ul>";
-                                foreach ($menu as $page) {
-                                    if (in_array($page, $accessible_pages)) {
+                                foreach($menu as $page) {
+                                    if(in_array($page, $accessible_pages)) {
                                         echo "<li><a href='$page'>" . ucfirst(str_replace('-', ' ', $page)) . "</a></li>";
                                     }
                                 }
@@ -369,13 +383,24 @@
                         }
                         ?>
 
-                        <?php if (in_array("topup-downline", $accessible_pages)) { ?><li><a href="topup-downline"><i class="fa fa-database"></i><span>Invest for ID</span></a></li><?php } ?>
-                        <?php if (in_array("member-balance", $accessible_pages)) { ?><li><a href="member-balance" class=""><i class="fa fa-usd"></i> <span>Member Balance</span></a></li><?php } ?>
-                        <?php if (in_array("withdraw-request", $accessible_pages)) { ?><li><a href="withdraw-request"><i class="fa fa-database"></i><span>View Withdraw Request</span></a></li><?php } ?>
-                        <?php if (in_array("view-voucher", $accessible_pages)) { ?><li><a href="view-voucher"><i class="fa fa-database"></i><span>View Voucher</span></a></li><?php } ?>
-                        <?php if (in_array("withdraw-request-trx", $accessible_pages)) { ?><li><a href="withdraw-request-trx"><i class="fa fa-database"></i><span>View Withdraw Request (TRX)</span></a></li><?php } ?>
+                        <?php if(in_array("topup-downline", $accessible_pages)) { ?>
+                            <li><a href="topup-downline"><i class="fa fa-database"></i><span>Invest for ID</span></a>
+                            </li><?php } ?>
+                        <?php if(in_array("member-balance", $accessible_pages)) { ?>
+                            <li><a href="member-balance" class=""><i class="fa fa-usd"></i> <span>Member Balance</span></a>
+                            </li><?php } ?>
+                        <?php if(in_array("withdraw-request", $accessible_pages)) { ?>
+                            <li><a href="withdraw-request"><i
+                                            class="fa fa-database"></i><span>View Withdraw Request</span></a>
+                            </li><?php } ?>
+                        <?php if(in_array("view-voucher", $accessible_pages)) { ?>
+                            <li><a href="view-voucher"><i class="fa fa-database"></i><span>View Voucher</span></a>
+                            </li><?php } ?>
+                        <?php if(in_array("withdraw-request-trx", $accessible_pages)) { ?>
+                            <li><a href="withdraw-request-trx"><i class="fa fa-database"></i><span>View Withdraw Request (TRX)</span></a>
+                            </li><?php } ?>
                     </ul>
-                <?php
+                    <?php
                 }
                 ?>
             </div>
@@ -387,7 +412,7 @@
         <div class="mm-sidebar-footer">
             <a href="member"><i class="fa fa-user"></i><span class="badge badge-pill badge-info notification">Add</span></a>
             <a href="news"><i class="fa fa-bell"></i><span
-                    class="badge badge-pill badge-warning notification">Add</span></a>
+                        class="badge badge-pill badge-warning notification">Add</span></a>
             <a href="change-password"><i class="fa fa-cog"></i><span class="badge-sonar">Pwd</span></a>
             <a href="logout"><i class="fa fa-power-off"></i></a>
         </div>

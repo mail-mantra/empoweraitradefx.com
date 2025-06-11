@@ -39,7 +39,13 @@ if(isset($_POST['api_key']) && $test_api_key == $_POST['api_key']) {
             if($is_downline) {
                 $response["status"] = 1;
                 $response["msg"] = 'success';
-                $response["name"] = $member['name'];
+                $response["result"] = [
+                    "member_id" => $member['member_id'],
+                    "mem_code" => $member['mem_code'],
+                    'name' => $member['name'],
+                    "email" => $member['email'],
+                    "mobile" => $member['mobile']
+                ];
             }
             else {
                 throw new Exception('Not a downline Member');

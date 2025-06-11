@@ -3,7 +3,6 @@ include('include/privilege.php');
 include('../class/DbClass.php');
 include('../lib/my_function.php');
 $db= new Database();
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,23 +10,6 @@ $db= new Database();
 <title><?php include('include/title.php'); ?></title>
 
 <?php include('include/header-common-file.php'); ?>
-<style>
-    label>input {
-        visibility: hidden;
-        position: absolute;
-    }
-
-    label>input+img {
-        cursor: pointer;
-        border: 2px solid transparent;
-        max-width: 200px !important;
-        float: left;
-    }
-
-    label>input:checked+img {
-        border: 2px solid #ff3f04;
-    }
-</style>
 </head>
 <body>
 <!-- particles -->
@@ -43,19 +25,21 @@ $db= new Database();
 <?php include('include/menu-direction.php'); ?>
 <!--end-mm-menu-direction-->
 
-<!--start-mm-top-header-->
-<?php include('include/mm-top-header.php'); ?>
-<!--end-mm-top-header-->
+
 
 <!--start-body-content-->
 <div class="body-content">
+    <!--start-mm-top-header-->
+    <?php include('include/mm-top-header.php'); ?>
+    <!--end-mm-top-header-->
+
 	<div class="container">
     	<div class="col-lg-12">
         	<div class="row">
                 <div class="dashboard-title-2">
                 	<div class="caption-2">
-                        <h2>Investment</h2>
-                        <p>Invest For ID</p>
+                        <h2>Live Trade Investment</h2>
+                        <p>Live Trade Investment for ID</p>
                     </div>
                 </div>
             </div>
@@ -63,26 +47,24 @@ $db= new Database();
         
     	<div class="form-panel">
         	<div class="row">
-        	    <div class="col-lg-12">
-                    <div class="title-2 mb-4">
-                        Investment
-                    </div>
-                </div>
         	    
                 <div class="col-lg-12"> 
                     <?php include('include/alert.php'); ?>
                     
-                    <form id="frmAdd" action="topupc" method="post">
+                    <form id="frmAdd" action="topup-live-downlinec" method="post">
                     	<div class="row">
-                    	    <div class="form-group col-md-3 col-sm-6">
+                    	    <div class="form-group col-md-4 col-sm-6">
                                 <label>Member Code*</label>
                                 <input type="text" name="mem_code" id="mem_code" class="form-control" required  onkeyup="getMemberName()" placeholder="Enter member code*">
                                 <div id="validMember"></div>
                             </div>
-                            
-                            <div class="form-group col-md-3 col-sm-6">
+                        </div>
+                        
+                        <div class="row">
+                    	    <div class="form-group col-md-4 col-sm-6">
                                 <label>Amount*</label>
-                                <input type="text" name="amount" id="amount" value="10" readonly class="form-control" data-rule-digits="true" data-rule-required="true" placeholder="Enter the amount" />
+                                <input type="number" name="amount" id="amount" class="form-control" value="1000" data-rule-digits="true" data-rule-required="true" placeholder="Enter the amount" />
+                                <span class="text-danger">Minimum investment 1000</span>
                             </div>
                            
                             <div class="col-md-12">

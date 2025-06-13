@@ -194,11 +194,10 @@ $mem_name_id = '';
 						 inner join member_details m3 on m1.member_id=m3.member_id 
 						 where 1 ".$query_search_by.$search_with_date_range;
 
-                $query = "select m1.*,m2.*,m3.state,m3.city,m3.pin, pu1.created_on AS member_package_update_on
+                $query = "select m1.*,m2.*,m3.state,m3.city,m3.pin, TOTAL_SELF_TOPUP(m1.member_id) AS total_topup_amount
 						from member m1 
 						inner join member_login m2 on m1.member_id=m2.member_id 
 						inner join member_details m3 on m1.member_id=m3.member_id 
-						LEFT JOIN `member_package_update` AS pu1 on m1.member_id= pu1.member_id 
 						where m1.intro_mtree like '%$user_code%' ".$query_search_by.$search_with_date_range;
 						
                 $con=$db->connect();
@@ -228,11 +227,17 @@ $mem_name_id = '';
                         </thead>
                         <tbody>
                             <?php
+                            $con = $db->connect();
+
                             while($r1=mysqli_fetch_assoc($sql))
                             {
                                 $no++;
 								$member_id = $r1['member_id'];
 								$mem_code = $r1['mem_code'];
+
+                                $is_active = member_is_active($con, $member_id);
+
+                                $active_date = current_package_date_of_member($con, $member_id);
                             ?>
                                 <tr>
                                     <td><?php echo $no; ?>.</td>	
@@ -240,10 +245,20 @@ $mem_name_id = '';
                                     <td><?php echo $r1['name'];?></td>
                                     <td><?php echo $r1['intro_code']; ?></td>
                                     <td><?php echo dmy($r1['doj']); ?></td>
-                                    <td><?php echo ($r1['member_package_update_on'])?dmy($r1['member_package_update_on']):''; ?></td>
+                                    <td><?php
+                                        if ($is_active >= 1) {
+                                            echo "<span class='badge badge-success'>Active</span><br>";
+                                            echo "<span class='badge badge-warning'>" . CURRENCY_ICON . $r1['total_topup_amount'] . "</span><br>";
+                                            echo dmy($active_date);
+                                        } else {
+                                            echo "<span class='badge badge-danger'>Inactive</span>";
+                                        }
+                                        ?>
+                                    </td>
                                 </tr>
                             <?php
                             }
+                            $con->close();
                             ?>
                         </tbody>
                         </table>
